@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thangzom Mekrisuh — Economics Student &amp; Curious Explorer</title>
+<meta name="description" content="Portfolio of Thangzom Mekrisuh, Economics student at St. Stephen's College — traveller, musician, and curious explorer.">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — edit colors here to re-theme the whole site
+   ============================================================ */
+:root{
+  --cream:        #F5F1E6;   /* main background */
+  --cream-soft:   #FBF8F1;   /* card surfaces */
+  --forest:       #223B2E;   /* deep green — primary text on light */
+  --forest-2:     #2F4A3B;   /* secondary green */
+  --moss:         #6E8F72;   /* soft green accent */
+  --moss-light:   #A8C1A4;   /* pale leaf green */
+  --clay:         #B67A45;   /* warm earthy amber accent */
+  --clay-deep:    #8C5A2E;   /* deeper clay for contrast text */
+  --bark:         #4B3626;   /* tree trunk / cat silhouette */
+  --bark-light:   #6B4E38;
+  --ink:          #24211B;   /* near-black warm text */
+  --gold:         #D8A857;   /* falling-leaf highlight */
+
+  --glass-bg:     rgba(251, 248, 241, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.35);
+
+  --shadow-soft:  0 10px 30px rgba(36, 33, 27, 0.10);
+  --shadow-lift:  0 18px 44px rgba(36, 33, 27, 0.16);
+
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Work Sans', Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-lg: 26px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, svg{ display:block; max-width:100%; }
+a{ color: inherit; text-decoration: none; }
+ul{ list-style: none; margin:0; padding:0; }
+button{ font: inherit; cursor:pointer; }
+h1,h2,h3,h4,p{ margin:0; }
+
+.visually-hidden{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+.skip-link{
+  position:absolute; left:12px; top:-60px; z-index:1000;
+  background: var(--forest); color: var(--cream-soft);
+  padding: 10px 18px; border-radius: 8px; transition: top .2s var(--ease);
+}
+.skip-link:focus{ top:12px; }
+
+:focus-visible{
+  outline: 2.5px solid var(--clay-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Reduced motion baseline */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.eyebrow{
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--clay-deep);
+  font-weight: 600;
+}
+h1, h2, h3{ font-family: var(--font-display); color: var(--forest); font-weight: 600; }
+h2.section-title{
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1.15;
+  max-width: 16ch;
+}
+.section-lede{
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  color: #4C4738;
+  max-width: 62ch;
+}
+
+/* ============================================================
+   BACKGROUND SCENE — the cat under the tree
+   ============================================================ */
+.scene{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 45% at 78% 8%, rgba(216,168,87,0.35), rgba(216,168,87,0) 70%),
+    linear-gradient(180deg, #EFE9D8 0%, #F5F1E6 46%, #ECE6D6 100%);
+}
+
+.scene__sun{
+  position:absolute;
+  top:-6%; right:6%;
+  width:min(34vw, 420px); height:min(34vw, 420px);
+  border-radius:50%;
+  background: radial-gradient(circle at 40% 40%, rgba(255,244,214,0.95), rgba(255,224,150,0.28) 55%, rgba(255,224,150,0) 72%);
+  filter: blur(2px);
+  animation: sunPulse 12s ease-in-out infinite;
+}
+@keyframes sunPulse{
+  0%,100%{ transform: scale(1); opacity: .95; }
+  50%{ transform: scale(1.06); opacity: 1; }
+}
+
+.scene__hill{
+  position:absolute; left:-10%; right:-10%; bottom:-4%;
+  height: 34%;
+  background: linear-gradient(180deg, rgba(110,143,114,0.28), rgba(110,143,114,0.5));
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* Tree */
+.scene__tree{
+  position:absolute;
+  right: 4%;
+  bottom: 6%;
+  width: min(46vw, 560px);
+  transform-origin: bottom center;
+}
+.tree-trunk{ fill: var(--bark); }
+.tree-branch{ stroke: var(--bark); fill:none; stroke-linecap: round; }
+.tree-canopy circle{ opacity: 0.94; }
+.canopy-a{ fill: #4E6C4F; }
+.canopy-b{ fill: #5E7F5D; }
+.canopy-c{ fill: #75986E; }
+
+.scene__tree .canopy{
+  transform-origin: 50% 20%;
+  animation: canopySway 9s ease-in-out infinite;
+}
+@keyframes canopySway{
+  0%,100%{ transform: rotate(-0.6deg); }
+  50%{ transform: rotate(0.6deg); }
+}
+
+/* Cat */
+.scene__cat{
+  position:absolute;
+  right: 12.5%;
+  bottom: 7.6%;
+  width: min(15vw, 190px);
+}
+.cat-body{ fill: var(--bark); }
+.cat-face-line{ stroke: var(--cream-soft); stroke-width: 1.4; fill:none; stroke-linecap: round; opacity:.75; }
+.cat-eye{ fill: var(--cream-soft); }
+
+.cat-tail{
+  transform-box: fill-box;
+  transform-origin: 12% 88%;
+  animation: tailWag 3.4s ease-in-out infinite;
+}
+@keyframes tailWag{
+  0%,100%{ transform: rotate(0deg); }
+  25%{ transform: rotate(9deg); }
+  50%{ transform: rotate(-4deg); }
+  75%{ transform: rotate(6deg); }
+}
+
+.scene__shadow{
+  position:absolute;
+  right: 8%;
+  bottom: 5.4%;
+  width: min(24vw, 300px);
+  height: 26px;
+  background: radial-gradient(ellipse at center, rgba(36,33,27,0.22), rgba(36,33,27,0) 72%);
+  animation: shadowBreathe 9s ease-in-out infinite;
+}
+@keyframes shadowBreathe{
+  0%,100%{ transform: scaleX(1); opacity:.9; }
+  50%{ transform: scaleX(1.06); opacity:.75; }
+}
+
+/* Grass blades */
+.scene__grass{
+  position:absolute; left:0; right:0; bottom:0; height:9%;
+  display:flex; align-items:flex-end; gap: 1.1vw;
+  padding: 0 2vw;
+  overflow:hidden;
+}
+.blade{
+  width: 6px;
+  height: clamp(22px, 3.6vw, 46px);
+  background: linear-gradient(180deg, var(--moss-light), var(--moss));
+  border-radius: 6px 6px 0 0;
+  transform-origin: bottom center;
+  animation: sway 4.5s ease-in-out infinite;
+  opacity: 0.85;
+}
+.blade:nth-child(odd){ animation-duration: 5.2s; }
+.blade:nth-child(3n){ height: clamp(16px, 2.6vw, 34px); animation-duration: 3.8s; }
+.blade:nth-child(5n){ animation-delay: -1.4s; }
+.blade:nth-child(7n){ animation-delay: -2.6s; }
+@keyframes sway{
+  0%,100%{ transform: rotate(-4deg); }
+  50%{ transform: rotate(5deg); }
+}
+
+/* Falling leaves */
+.scene__leaves{
+  position:absolute; inset:0;
+  pointer-events:none;
+}
+.leaf{
+  position:absolute;
+  top:-6%;
+  width: 12px; height: 12px;
+  border-radius: 0 60% 0 60%;
+  will-change: transform, opacity;
+  animation-name: leafFall;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  opacity: 0.9;
+}
+.leaf--moss{ background: var(--moss); }
+.leaf--clay{ background: var(--clay); }
+.leaf--gold{ background: var(--gold); }
+.leaf--forest{ background: var(--forest-2); }
+
+@keyframes leafFall{
+  0%{ transform: translate(0,0) rotate(0deg); opacity:0; }
+  6%{ opacity:.95; }
+  50%{ transform: translate(var(--drift, 40px), 55vh) rotate(160deg); }
+  94%{ opacity:.9; }
+  100%{ transform: translate(calc(var(--drift, 40px) * 1.6), 108vh) rotate(340deg); opacity:0; }
+}
+
+@media (max-width: 760px){
+  .scene__tree{ width: min(72vw, 420px); right: -6%; }
+  .scene__cat{ width: min(24vw, 130px); right: 8%; bottom: 8.5%; }
+  .scene__shadow{ right: 4%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .scene__leaves{ display:none; }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav{
+  position: sticky; top: 0; z-index: 100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px clamp(20px, 4vw, 56px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid var(--glass-border);
+}
+.nav__brand{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--forest);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.nav__links{
+  display:flex; gap: clamp(18px, 2.4vw, 34px);
+  align-items:center;
+}
+.nav__links a{
+  position:relative;
+  font-size: 0.96rem;
+  color: var(--forest-2);
+  padding: 6px 2px;
+  transition: color .2s var(--ease);
+}
+.nav__links a::after{
+  content:"";
+  position:absolute; left:0; right:100%; bottom:-2px; height:2px;
+  background: var(--clay-deep);
+  transition: right .28s var(--ease);
+  border-radius: 2px;
+}
+.nav__links a:hover, .nav__links a.is-active{ color: var(--ink); }
+.nav__links a:hover::after, .nav__links a.is-active::after{ right:0; }
+
+.nav__toggle{
+  display:none;
+  background:none; border:none;
+  width: 40px; height: 40px;
+  align-items:center; justify-content:center;
+  border-radius: 10px;
+}
+.nav__toggle:hover{ background: rgba(34,59,46,0.08); }
+.nav__toggle-bar, .nav__toggle-bar::before, .nav__toggle-bar::after{
+  content:""; display:block;
+  width: 20px; height: 2px; background: var(--forest);
+  border-radius: 2px;
+  transition: transform .25s var(--ease), opacity .2s var(--ease);
+}
+.nav__toggle-bar{ position:relative; }
+.nav__toggle-bar::before{ position:absolute; top:-6px; left:0; }
+.nav__toggle-bar::after{ position:absolute; top:6px; left:0; }
+.nav.is-open .nav__toggle-bar{ background: transparent; }
+.nav.is-open .nav__toggle-bar::before{ transform: translateY(6px) rotate(45deg); }
+.nav.is-open .nav__toggle-bar::after{ transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 780px){
+  .nav__toggle{ display:flex; }
+  .nav__links{
+    position:absolute; top: 100%; left:0; right:0;
+    flex-direction:column; align-items:flex-start;
+    background: var(--cream-soft);
+    padding: 10px clamp(20px,4vw,56px) 24px;
+    gap: 6px;
+    border-bottom: 1px solid var(--glass-border);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events:none;
+    transition: opacity .22s var(--ease), transform .22s var(--ease);
+  }
+  .nav.is-open .nav__links{
+    opacity:1; transform: translateY(0); pointer-events:auto;
+  }
+  .nav__links a{ width:100%; padding: 12px 4px; font-size: 1.05rem; }
+}
+
+/* ============================================================
+   LAYOUT / CONTAINERS
+   ============================================================ */
+main{ position:relative; z-index: 1; }
+.wrap{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 5vw, 56px);
+  padding-right: clamp(20px, 5vw, 56px);
+}
+section{ position:relative; padding: clamp(64px, 9vw, 120px) 0; }
+
+/* reveal-on-scroll */
+.reveal{ opacity:0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in-view{ opacity:1; transform: translateY(0); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  padding-top: clamp(70px, 12vh, 140px);
+  padding-bottom: clamp(70px, 10vh, 130px);
+  min-height: min(88vh, 820px);
+  display:flex; align-items:center;
+}
+.hero__inner{ max-width: 720px; }
+.hero__badge{
+  display:inline-flex; align-items:center; gap:8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px 8px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--forest-2);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 26px;
+  animation: floatBadge 5s ease-in-out infinite;
+}
+.hero__badge-dot{
+  width:8px; height:8px; border-radius:50%;
+  background: var(--clay); flex:none;
+}
+@keyframes floatBadge{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-5px); }
+}
+
+.hero__kicker{
+  font-size: 0.98rem;
+  color: var(--clay-deep);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.hero h1{
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+.hero__headline{
+  margin-top: 18px;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  color: var(--forest-2);
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+.hero__text{
+  margin-top: 20px;
+  font-size: 1.05rem;
+  color: #4C4738;
+  max-width: 54ch;
+}
+.hero__ctas{
+  margin-top: 34px;
+  display:flex; flex-wrap:wrap; gap: 14px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), color .22s var(--ease);
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn:active{ transform: translateY(0); }
+.btn--primary{
+  background: var(--forest);
+  color: var(--cream-soft);
+  box-shadow: var(--shadow-soft);
+}
+.btn--primary:hover{ background: var(--forest-2); box-shadow: var(--shadow-lift); }
+.btn--ghost{
+  background: transparent;
+  color: var(--forest);
+  border-color: rgba(34,59,46,0.28);
+}
+.btn--ghost:hover{ background: rgba(34,59,46,0.06); border-color: rgba(34,59,46,0.4); }
+.btn--clay{
+  background: var(--clay);
+  color: #2A1B0C;
+  box-shadow: var(--shadow-soft);
+}
+.btn--clay:hover{ background: var(--gold); box-shadow: var(--shadow-lift); }
+
+/* ============================================================
+   GLASS CARD base
+   ============================================================ */
+.card{
+  background: var(--cream-soft);
+  border: 1px solid rgba(75, 54, 38, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about{ background: var(--cream); }
+.about__grid{
+  display:grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(30px, 5vw, 70px);
+  align-items:center;
+  margin-top: 40px;
+}
+.about__text p{
+  font-size: 1.06rem;
+  color: #423C2E;
+  margin-bottom: 16px;
+}
+.about__text p:last-child{ margin-bottom:0; }
+
+.about__card{
+  padding: clamp(26px, 3vw, 38px);
+  position:relative;
+  overflow:hidden;
+}
+.about__card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.about__card-row{
+  display:flex; align-items:center; gap:14px;
+  padding: 14px 0;
+  border-bottom: 1px dashed rgba(75,54,38,0.18);
+}
+.about__card-row:last-child{ border-bottom:none; }
+.about__card-icon{
+  flex:none; width:40px; height:40px;
+  border-radius: 12px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(110,143,114,0.16);
+}
+.about__card-icon svg{ width:20px; height:20px; }
+.about__card-label{ font-size: 0.72rem; color: var(--clay-deep); font-weight:700; letter-spacing:0.02em; }
+.about__card-value{ font-family: var(--font-display); font-size: 1.02rem; color: var(--forest); }
+
+@media (max-width: 860px){
+  .about__grid{ grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   EXPERIENCE — Beyond the Classroom
+   ============================================================ */
+.experience{ background: var(--cream-soft); }
+.exp__grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 46px;
+}
+.exp-card{
+  padding: 30px 24px;
+  display:flex; flex-direction:column; gap: 16px;
+}
+.exp-card:hover{ transform: translateY(-6px); box-shadow: var(--shadow-lift); }
+.exp-card__icon{
+  width:52px; height:52px; border-radius: 16px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.5rem;
+  background: linear-gradient(145deg, rgba(182,122,69,0.16), rgba(110,143,114,0.2));
+}
+.exp-card h3{ font-size: 1.12rem; }
+.exp-card p{ color:#4C4738; font-size: 0.96rem; }
+
+@media (max-width: 980px){
+  .exp__grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px){
+  .exp__grid{ grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   PROJECT — The Hearth Cat
+   ============================================================ */
+.project{ background: var(--cream); }
+.project-card{
+  margin-top: 44px;
+  position: relative;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  overflow:hidden;
+  isolation: isolate;
+}
+.project-card__art{
+  position:relative;
+  background:
+    radial-gradient(120% 100% at 20% 10%, rgba(216,168,87,0.35), transparent 60%),
+    linear-gradient(160deg, #2F4A3B, #223B2E 60%, #4B3626 130%);
+  min-height: 320px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.project-card__paw{
+  position:absolute;
+  width: 46px; height:46px;
+  opacity: 0;
+  transform: scale(0.6) rotate(-14deg);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+}
+.project-card:hover .project-card__paw{ opacity: 0.9; transform: scale(1) rotate(-14deg); }
+.pp1{ top: 18%; left: 20%; transition-delay: 0s; }
+.pp2{ top: 46%; left: 55%; transition-delay: .08s; }
+.pp3{ top: 68%; left: 28%; transition-delay: .16s; }
+
+.project-card__mark{
+  width: min(60%, 220px);
+}
+
+.project-card__body{
+  padding: clamp(30px, 4vw, 52px);
+  display:flex; flex-direction:column; gap: 16px;
+  justify-content:center;
+}
+.project-card__tag{
+  display:inline-flex; width:fit-content;
+  font-size: 0.78rem; font-weight:700; letter-spacing:0.02em;
+  color: var(--clay-deep);
+  background: rgba(182,122,69,0.14);
+  padding: 6px 14px; border-radius: 999px;
+}
+.project-card__body h3{ font-size: clamp(1.5rem, 2.6vw, 2rem); }
+.project-card__body p{ color:#4C4738; font-size: 1rem; max-width: 46ch; }
+.project-card__meta{
+  display:flex; flex-wrap:wrap; gap: 10px;
+  margin-top: 4px;
+}
+.pill{
+  font-size: 0.8rem; color: var(--forest-2);
+  border: 1px solid rgba(34,59,46,0.22);
+  padding: 5px 12px; border-radius: 999px;
+}
+.project-card__actions{ margin-top: 10px; }
+
+@media (max-width: 860px){
+  .project-card{ grid-template-columns: 1fr; }
+  .project-card__art{ min-height: 220px; }
+}
+
+/* ============================================================
+   WORK / GITHUB
+   ============================================================ */
+.work{
+  background: var(--forest);
+  color: var(--cream-soft);
+  text-align:center;
+}
+.work h2{ color: var(--cream-soft); margin:0 auto; }
+.work .section-lede{ color: rgba(245,241,230,0.78); margin: 16px auto 0; }
+.work__inner{ display:flex; flex-direction:column; align-items:center; }
+.work .btn--clay{ margin-top: 30px; }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{ background: var(--cream-soft); }
+.contact__grid{
+  margin-top: 44px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.contact-card{
+  padding: 30px 26px;
+  display:flex; align-items:center; gap: 18px;
+}
+.contact-card:hover{ transform: translateY(-5px); box-shadow: var(--shadow-lift); }
+.contact-card__icon{
+  flex:none; width:52px; height:52px; border-radius:16px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(182,122,69,0.16);
+}
+.contact-card__icon svg{ width:24px; height:24px; }
+.contact-card__label{ font-size: 0.78rem; color: var(--clay-deep); font-weight:700; }
+.contact-card__value{ font-family: var(--font-display); font-size: 1.15rem; color: var(--forest); word-break: break-word; }
+.contact-card__value:hover{ text-decoration: underline; }
+
+.contact__cta{
+  margin-top: 36px;
+  display:flex; align-items:center; gap: 14px; flex-wrap:wrap;
+}
+
+@media (max-width: 700px){
+  .contact__grid{ grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  position:relative; z-index:1;
+  background: var(--ink);
+  color: rgba(245,241,230,0.82);
+  padding: 40px clamp(20px,5vw,56px) 34px;
+  text-align:center;
+}
+footer .footer__name{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--cream-soft);
+}
+footer .footer__tag{
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: rgba(245,241,230,0.62);
+}
+footer .footer__copy{
+  margin-top: 22px;
+  font-size: 0.8rem;
+  color: rgba(245,241,230,0.42);
+}
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+.to-top{
+  position: fixed;
+  right: 22px; bottom: 22px;
+  z-index: 90;
+  width: 48px; height:48px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--cream-soft);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: var(--shadow-lift);
+  border: none;
+  opacity: 0; visibility:hidden; transform: translateY(10px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease), visibility .25s;
+}
+.to-top.is-visible{ opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover{ background: var(--forest-2); }
+.to-top svg{ width: 20px; height:20px; }
+
+/* ============================================================
+   RESPONSIVE TYPE / SMALL SCREENS
+   ============================================================ */
+@media (max-width: 480px){
+  .hero__ctas .btn{ width: 100%; justify-content:center; }
+  .hero__ctas{ flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<!-- ============================================================
+     BACKGROUND SCENE — cat under the tree (decorative, aria-hidden)
+     ============================================================ -->
+<div class="scene" aria-hidden="true">
+  <div class="scene__sun"></div>
+  <div class="scene__hill"></div>
+
+  <!-- Tree -->
+  <svg class="scene__tree" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+    <path class="tree-trunk" d="M186 460 L178 300 Q176 260 190 230 L210 230 Q224 260 222 300 L214 460 Z"></path>
+    <path class="tree-branch" d="M196 300 Q150 270 120 240" stroke-width="6"></path>
+    <path class="tree-branch" d="M204 300 Q250 260 280 250" stroke-width="6"></path>
+    <path class="tree-branch" d="M198 260 Q160 220 150 190" stroke-width="5"></path>
+    <g class="canopy tree-canopy">
+      <circle class="canopy-a" cx="150" cy="190" r="86"></circle>
+      <circle class="canopy-b" cx="240" cy="170" r="98"></circle>
+      <circle class="canopy-c" cx="200" cy="120" r="92"></circle>
+      <circle class="canopy-a" cx="290" cy="220" r="70"></circle>
+      <circle class="canopy-b" cx="120" cy="130" r="66"></circle>
+    </g>
+  </svg>
+
+  <!-- Cat sitting beneath the tree -->
+  <svg class="scene__cat" viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">
+    <!-- tail -->
+    <path class="cat-tail cat-body" d="M150 150 Q195 140 190 95 Q186 65 160 60 Q182 70 182 96 Q184 128 148 138 Z"></path>
+    <!-- body -->
+    <path class="cat-body" d="M55 185 Q40 120 78 92 Q100 76 128 92 Q160 112 150 160 Q148 178 130 185 Z"></path>
+    <!-- head -->
+    <path class="cat-body" d="M60 96 Q48 66 72 50 Q78 38 92 44 Q98 34 110 42 Q126 36 130 52 Q152 64 138 96 Q128 116 98 116 Q70 116 60 96 Z"></path>
+    <!-- ears already part of head path via points; add eyes -->
+    <circle class="cat-eye" cx="88" cy="82" r="3.2"></circle>
+    <circle class="cat-eye" cx="112" cy="82" r="3.2"></circle>
+    <path class="cat-face-line" d="M100 90 L100 96 Q100 100 96 100"></path>
+    <path class="cat-face-line" d="M84 100 Q92 106 100 100"></path>
+    <path class="cat-face-line" d="M116 100 Q108 106 100 100"></path>
+    <!-- front paws -->
+    <ellipse class="cat-body" cx="76" cy="182" rx="12" ry="8"></ellipse>
+    <ellipse class="cat-body" cx="112" cy="182" rx="12" ry="8"></ellipse>
+  </svg>
+
+  <div class="scene__shadow"></div>
+
+  <div class="scene__grass" id="grass"></div>
+
+  <div class="scene__leaves" id="leaves"></div>
+</div>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<header class="nav" id="siteNav">
+  <a href="#top" class="nav__brand">Thangzom Mekrisuh</a>
+  <nav aria-label="Primary">
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#about" data-nav>About</a></li>
+      <li><a href="#experience" data-nav>Experience</a></li>
+      <li><a href="#project" data-nav>Project</a></li>
+      <li><a href="#contact" data-nav>Contact</a></li>
+    </ul>
+  </nav>
+  <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+    <span class="nav__toggle-bar"></span>
+  </button>
+</header>
+
+<main id="main-content">
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero" id="top" aria-label="Introduction">
+    <div class="wrap">
+      <div class="hero__inner">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Currently studying Economics
+        </div>
+        <p class="hero__kicker">Hello, I'm</p>
+        <h1>Thangzom Mekrisuh</h1>
+        <p class="hero__headline">Economics Student &amp; Curious Explorer</p>
+        <p class="hero__text">An Economics student at St. Stephen's College with a curiosity for people, places, ideas, and creative expression.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="#project">Explore My Work</a>
+          <a class="btn btn--ghost" href="#contact">Contact Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT — edit the paragraphs below to update the bio
+       ============================================================ -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <p class="eyebrow reveal">About</p>
+      <h2 class="section-title reveal" id="about-title">A little about me</h2>
+
+      <div class="about__grid">
+        <div class="about__text reveal">
+          <p>I am an Economics student studying at St. Stephen's College. Beyond academics, I love discovering new places, experiencing different cultures, and exploring the world around me.</p>
+          <p>Having lived in Mauritius for five years, I have had the opportunity to experience life in a different environment and develop a broader perspective on people and places.</p>
+        </div>
+
+        <div class="about__card card reveal">
+          <div class="about__card-row">
+            <span class="about__card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6"><path d="M4 20c2-6 5-10 8-10s6 4 8 10" stroke-linecap="round"/><circle cx="12" cy="7" r="3.4"/></svg>
+            </span>
+            <div>
+              <p class="about__card-label">Studying</p>
+              <p class="about__card-value">Economics, St. Stephen's College</p>
+            </div>
+          </div>
+          <div class="about__card-row">
+            <span class="about__card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6"><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" stroke-linecap="round"/></svg>
+            </span>
+            <div>
+              <p class="about__card-label">Grew up between</p>
+              <p class="about__card-value">Home &amp; five years in Mauritius</p>
+            </div>
+          </div>
+          <div class="about__card-row">
+            <span class="about__card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6"><path d="M4 18c4-1 4-9 8-9s4 8 8 9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <p class="about__card-label">Drawn to</p>
+              <p class="about__card-value">Places, culture, and music</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BEYOND THE CLASSROOM
+       ============================================================ -->
+  <section class="experience" id="experience" aria-labelledby="exp-title">
+    <div class="wrap">
+      <p class="eyebrow reveal">Life &amp; Interests</p>
+      <h2 class="section-title reveal" id="exp-title">Beyond the Classroom</h2>
+      <p class="section-lede reveal">A few of the things that shape how I see the world.</p>
+
+      <div class="exp__grid">
+        <article class="exp-card card reveal">
+          <div class="exp-card__icon" aria-hidden="true">🌍</div>
+          <h3>Travel</h3>
+          <p>Love travelling and discovering different places across the world.</p>
+        </article>
+
+        <article class="exp-card card reveal">
+          <div class="exp-card__icon" aria-hidden="true">🇲🇺</div>
+          <h3>Mauritius</h3>
+          <p>Lived in Mauritius for 5 years, gaining the experience of living in a different country and culture.</p>
+        </article>
+
+        <article class="exp-card card reveal">
+          <div class="exp-card__icon" aria-hidden="true">🎹</div>
+          <h3>Piano</h3>
+          <p>Love playing piano and exploring music.</p>
+        </article>
+
+        <article class="exp-card card reveal">
+          <div class="exp-card__icon" aria-hidden="true">🎤</div>
+          <h3>Singing</h3>
+          <p>Enjoy singing and expressing myself through music.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURED PROJECT — The Hearth Cat
+       ============================================================ -->
+  <section class="project" id="project" aria-labelledby="project-title">
+    <div class="wrap">
+      <p class="eyebrow reveal">Featured Project</p>
+      <h2 class="section-title reveal" id="project-title">Featured Project</h2>
+
+      <div class="project-card card reveal">
+        <div class="project-card__art">
+          <svg class="project-card__mark" viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="#F5F1E6" opacity="0.16" d="M150 150 Q195 140 190 95 Q186 65 160 60 Q182 70 182 96 Q184 128 148 138 Z"></path>
+            <path fill="#F5F1E6" opacity="0.9" d="M55 185 Q40 120 78 92 Q100 76 128 92 Q160 112 150 160 Q148 178 130 185 Z"></path>
+            <path fill="#F5F1E6" opacity="0.9" d="M60 96 Q48 66 72 50 Q78 38 92 44 Q98 34 110 42 Q126 36 130 52 Q152 64 138 96 Q128 116 98 116 Q70 116 60 96 Z"></path>
+            <circle fill="#223B2E" cx="88" cy="82" r="3.4"></circle>
+            <circle fill="#223B2E" cx="112" cy="82" r="3.4"></circle>
+          </svg>
+          <svg class="project-card__paw pp1" viewBox="0 0 24 24" fill="#F5F1E6" aria-hidden="true"><circle cx="7" cy="8" r="2.4"/><circle cx="12" cy="5.5" r="2.4"/><circle cx="17" cy="8" r="2.4"/><ellipse cx="12" cy="15" rx="6" ry="5"/></svg>
+          <svg class="project-card__paw pp2" viewBox="0 0 24 24" fill="#F5F1E6" aria-hidden="true"><circle cx="7" cy="8" r="2.4"/><circle cx="12" cy="5.5" r="2.4"/><circle cx="17" cy="8" r="2.4"/><ellipse cx="12" cy="15" rx="6" ry="5"/></svg>
+          <svg class="project-card__paw pp3" viewBox="0 0 24 24" fill="#F5F1E6" aria-hidden="true"><circle cx="7" cy="8" r="2.4"/><circle cx="12" cy="5.5" r="2.4"/><circle cx="17" cy="8" r="2.4"/><ellipse cx="12" cy="15" rx="6" ry="5"/></svg>
+        </div>
+        <div class="project-card__body">
+          <span class="project-card__tag">Personal Project</span>
+          <h3>The Hearth Cat</h3>
+          <p>A cosy, hand-crafted digital space built around warmth, calm, and quiet creativity — the same spirit that runs through this portfolio.</p>
+          <div class="project-card__meta">
+            <span class="pill">Web</span>
+            <span class="pill">Design</span>
+            <span class="pill">Creative Coding</span>
+          </div>
+          <div class="project-card__actions">
+            <button class="btn btn--clay" id="viewProjectBtn">View Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPLORE MY WORK — GitHub
+       ============================================================ -->
+  <section class="work" id="work" aria-labelledby="work-title">
+    <div class="wrap work__inner">
+      <p class="eyebrow reveal" style="color:var(--gold)">Code &amp; Work</p>
+      <h2 class="section-title reveal" id="work-title" style="max-width:20ch">Explore My Work</h2>
+      <p class="section-lede reveal">A look at what I've been building and tinkering with.</p>
+      <a class="btn btn--clay reveal" id="githubBtn" href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit GitHub profile (opens in a new tab)">
+        View on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <p class="eyebrow reveal">Get in touch</p>
+      <h2 class="section-title reveal" id="contact-title">Let's Connect</h2>
+      <p class="section-lede reveal">Whether it's about economics, travel stories, or music — I'd love to hear from you.</p>
+
+      <div class="contact__grid">
+        <a class="contact-card card reveal" href="mailto:bishantchhetri42@gmail.com">
+          <span class="contact-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--clay-deep)" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span>
+            <span class="contact-card__label">Email</span><br>
+            <span class="contact-card__value">bishantchhetri42@gmail.com</span>
+          </span>
+        </a>
+
+        <a class="contact-card card reveal" href="tel:6294139461">
+          <span class="contact-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--clay-deep)" stroke-width="1.6"><path d="M6 3h3l2 5-2.5 1.6a12 12 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4 6.2 2 2 0 0 1 6 3Z" stroke-linejoin="round"/></svg>
+          </span>
+          <span>
+            <span class="contact-card__label">Phone</span><br>
+            <span class="contact-card__value">6294139461</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="contact__cta reveal">
+        <a class="btn btn--primary" href="mailto:bishantchhetri42@gmail.com">Say Hello →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="footer__name">Thangzom Mekrisuh</p>
+  <p class="footer__tag">Economics • Travel • Music • Curiosity</p>
+  <p class="footer__copy">© 2026 Thangzom Mekrisuh</p>
+</footer>
+
+<button class="to-top" id="toTopBtn" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     EASY-TO-EDIT LINKS — replace these two values as needed
+     ============================================================ */
+  const PROJECT_LINK = "https://github.com/bishantchhetri42-star/The-Hearth-Cat"; // The Hearth Cat project
+  const GITHUB_LINK  = "https://github.com/bishantchhetri42-star/The-Hearth-Cat"; // GitHub profile / work
+
+  document.getElementById("viewProjectBtn").addEventListener("click", function(){
+    window.open(PROJECT_LINK, "_blank", "noopener,noreferrer");
+  });
+  document.getElementById("githubBtn").setAttribute("href", GITHUB_LINK);
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ============================================================
+     MOBILE NAV
+     ============================================================ */
+  const nav = document.getElementById("siteNav");
+  const navToggle = document.getElementById("navToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  function closeNav(){
+    nav.classList.remove("is-open");
+    navToggle.setAttribute("aria-expanded", "false");
+  }
+  navToggle.addEventListener("click", function(){
+    const isOpen = nav.classList.toggle("is-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+  navLinks.addEventListener("click", function(e){
+    if (e.target.tagName === "A") closeNav();
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeNav();
+  });
+
+  /* ============================================================
+     SMOOTH SCROLL for in-page nav links
+     ============================================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener("click", function(e){
+      const targetId = link.getAttribute("href");
+      if (targetId.length < 2) return;
+      const target = document.querySelector(targetId);
+      if (target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }
+    });
+  });
+
+  /* ============================================================
+     ACTIVE NAV LINK ON SCROLL
+     ============================================================ */
+  const navAnchors = document.querySelectorAll('#navLinks a[data-nav]');
+  const sections = Array.from(navAnchors).map(function(a){
+    return document.querySelector(a.getAttribute("href"));
+  }).filter(Boolean);
+
+  if ("IntersectionObserver" in window){
+    const navObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        const id = "#" + entry.target.id;
+        const link = document.querySelector('#navLinks a[href="' + id + '"]');
+        if (!link) return;
+        if (entry.isIntersecting){
+          navAnchors.forEach(function(a){ a.classList.remove("is-active"); });
+          link.classList.add("is-active");
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+    sections.forEach(function(s){ navObserver.observe(s); });
+
+    /* ============================================================
+       SCROLL REVEAL
+       ============================================================ */
+    const revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add("in-view");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    document.querySelectorAll(".reveal").forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in-view"); });
+  }
+
+  /* ============================================================
+     BACK TO TOP BUTTON
+     ============================================================ */
+  const toTopBtn = document.getElementById("toTopBtn");
+  let ticking = false;
+  window.addEventListener("scroll", function(){
+    if (!ticking){
+      window.requestAnimationFrame(function(){
+        toTopBtn.classList.toggle("is-visible", window.scrollY > 560);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  toTopBtn.addEventListener("click", function(){
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  /* ============================================================
+     GRASS BLADES — generated once, purely decorative
+     ============================================================ */
+  const grass = document.getElementById("grass");
+  const bladeCount = window.innerWidth < 640 ? 18 : 34;
+  for (let i = 0; i < bladeCount; i++){
+    const blade = document.createElement("div");
+    blade.className = "blade";
+    blade.style.animationDelay = (Math.random() * -4).toFixed(2) + "s";
+    grass.appendChild(blade);
+  }
+
+  /* ============================================================
+     FALLING LEAVES — lightweight, recycled on animation end
+     ============================================================ */
+  const leavesContainer = document.getElementById("leaves");
+  const leafColors = ["leaf--moss", "leaf--clay", "leaf--gold", "leaf--forest"];
+  const maxLeaves = reduceMotion ? 0 : (window.innerWidth < 640 ? 6 : 12);
+
+  function spawnLeaf(initial){
+    if (maxLeaves === 0) return;
+    const leaf = document.createElement("span");
+    leaf.className = "leaf " + leafColors[Math.floor(Math.random() * leafColors.length)];
+
+    const size = 8 + Math.random() * 8;
+    leaf.style.width = size + "px";
+    leaf.style.height = size + "px";
+    leaf.style.left = (Math.random() * 92) + "%";
+
+    const duration = 9 + Math.random() * 8;
+    leaf.style.animationDuration = duration.toFixed(1) + "s";
+    leaf.style.animationDelay = initial ? "-" + (Math.random() * duration).toFixed(1) + "s" : "0s";
+
+    const drift = (Math.random() * 120 - 60).toFixed(0) + "px";
+    leaf.style.setProperty("--drift", drift);
+
+    leaf.addEventListener("animationend", function(){
+      leaf.remove();
+      spawnLeaf(false);
+    });
+
+    leavesContainer.appendChild(leaf);
+  }
+
+  for (let i = 0; i < maxLeaves; i++){
+    spawnLeaf(true);
+  }
+
+})();
+</script>
+</body>
+</html>
